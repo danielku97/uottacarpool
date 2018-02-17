@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <title>UOTTACARPOOL</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/uottacarpool.css" rel="stylesheet"> 
+  </head>
+  <body>
+    <!--Text -->
+    <div align="center">
+        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL!!</h1>
+        <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+    </div>
+    <div class="btn_container" align="center">
+      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver_btn">Driver</button>
+      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger_btn">Passenger</button>
+    </div>
+    <div class="login" align="center">
+      <form action="/action_page.php">
+        Email<br>
+        <input type="text" name="email">
+        <br>
+        Password<br>
+        <input type="text" name="password">
+        <br><br>
+        <input type="submit" value="Login">
+      </form> 
+    </div>
+
+
+<script>
+function driver() {
+    document.getElementById("driver").removeClass("btn");
+    document.getElementById("driver").addClass("selected");
+}
+</script>
+
+  </body>
+</html>
