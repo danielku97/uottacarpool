@@ -115,10 +115,10 @@ function login(){
 
    	//Ok, error is logged to console and the error is that url has to be http
    	//Preliminary research shows that we need python and flask?? 
-   	//Then we can call teh function and everything else should be good
+   	//Then we can call the function and everything else should be good
       $.ajax({
         type: "POST",
-        url : "./getResults.py",
+        url : "/receiver",
         data: {param: driver, param2: passenger_list},
         dataType : "json",
         success : function(response){
