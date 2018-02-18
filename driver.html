@@ -11,34 +11,77 @@
       integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
       crossorigin="anonymous">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/driver.css">
 
 </head>
 
 <body>
-
+  <div class='background'>
   <div class="header col-12">
     <h1>This is a carpool app.</h1>
   </div>
 
   <div class="main-container">
     <div class="info-container col-4">
-      <br>
-      <div id="start-container">
+      <br><br>
+      <form id="driverForm" action="/" method="post">
         <input id="start" type="text" class="form-control" placeholder="Starting location">
-      </div>
-      <br>
-      <div id="dest-container">
+        <br>
         <input id="destination" type="text" class="form-control" placeholder="Destination">
-      </div>
-      <br>
-      <button id="search-button" type="button" class="btn btn-primary">Search</button>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <select name="Arrival Time" id="dropdown-menu" onload='fillTimes()'>
+          <option value="12:00">12:00-12:15</option>
+          <option value="12:15">12:15-12:30</option>
+          <option value="12:30">12:30-12:45</option>
+          <option value="12:45">12:45-1:00</option>
+          <option value="1:00">1:00-1:15</option>
+          <option value="1:15">1:15-1:30</option>
+          <option value="1:30">1:30-1:45</option>
+          <option value="1:45">1:45-2:00</option>
+          <option value="2:00">2:00-2:15</option>
+          <option value="2:15">2:15-2:30</option>
+          <option value="2:30">2:30-2:45</option>
+          <option value="2:45">2:45-3:00</option>
+          <option value="3:00">3:00-3:15</option>
+          <option value="3:15">3:15-3:30</option>
+          <option value="3:30">3:30-3:45</option>
+          <option value="3:45">3:45-4:00</option>
+          <option value="4:00">4:00-4:15</option>
+          <option value="4:15">4:15-4:30</option>
+          <option value="4:30">4:30-4:45</option>
+          <option value="4:45">4:45-5:00</option>
+          <option value="5:00">5:00-5:15</option>
+          <option value="5:15">5:15-5:30</option>
+          <option value="5:30">5:30-5:45</option>
+          <option value="5:45">5:45-6:00</option>
+          <option value="6:00">6:00-6:15</option>
+          <option value="6:15">6:15-6:30</option>
+          <option value="6:30">6:30-6:45</option>
+          <option value="6:45">6:45-7:00</option>
+          <option value="7:00">7:00-7:15</option>
+          <option value="7:15">7:15-7:30</option>
+          <option value="7:30">7:30-7:45</option>
+          <option value="7:45">7:45-8:00</option>
+          <option value="8:00">8:00-8:15</option>
+          <option value="8:15">8:15-8:30</option>
+          <option value="8:30">8:30-8:45</option>
+          <option value="8:45">8:45-9:00</option>
+          <option value="9:00">9:00-9:15</option>
+          <option value="9:15">9:15-9:30</option>
+          <option value="9:30">9:30-9:45</option>
+          <option value="9:45">9:45-10:00</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input name="am-pm" type='radio' value='am'> AM &nbsp;
+        <input name="am-pm" type='radio' value='pm'> PM
+        <input id="search-button" type="submit" class="btn btn-primary" value="Search">
+      </form>
     </div>
 
     <div id="map-container" class="col-8">
       <br>
       <div id="map"></div>
-
 
     </div>
   </div>
@@ -52,7 +95,7 @@
         center: ottawa
       });
 
-      var marker = new google.maps.Marker({
+      var s_marker = new google.maps.Marker({
         position: ottawa,
         map: map
       });
@@ -67,7 +110,7 @@
       d_autocomplete.bindTo('bounds', map);
 
       s_autocomplete.addListener('place_changed', function() {
-        marker.setVisible(false);
+        s_marker.setVisible(false);
         var place = s_autocomplete.getPlace();
         if (!place.geometry) {
           // User entered the name of a Place that was not suggested and
@@ -76,10 +119,22 @@
           return;
         }
 
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        }
+        else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(16);
+        }
+
+        s_marker.setPosition(place.geometry.location);
+        s_marker.setVisible(true);
+
       });
 
+      var d_marker = new google.maps.Marker();
       d_autocomplete.addListener('place_changed', function() {
-        marker.setVisible(false);
+        d_marker.setVisible(false);
         var place = d_autocomplete.getPlace();
         if (!place.geometry) {
           // User entered the name of a Place that was not suggested and
@@ -87,6 +142,21 @@
           window.alert("No details available for input: '" + place.name + "'");
           return;
         }
+
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        }
+        else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(16);
+        }
+
+        d_marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map
+        });
+        d_marker.setVisible(true);
+
       });
 
     }
@@ -102,6 +172,6 @@
     </script>
 
 
-
+</div>
 </body>
 </html>
