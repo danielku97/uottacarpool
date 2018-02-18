@@ -1,0 +1,37 @@
+*{
+  font-family: "Helvetica";
+}
+
+.info-container {
+  width:40%;
+  float: left;
+  margin-left: 3%;
+}
+
+#map-container {
+  width:60%;
+  float:right;
+}
+
+#search-button {
+  float:right;
+}
+
+#submit-div{
+  display:inline;
+}
+
+#start:focus {
+    border-color: #4d90fe;
+}
+
+#map {
+  height: 80vh;
+  width: 100%;
+}
+
+#header {
+  clear:both;
+  height:20vh;
+  width:100%;
+}

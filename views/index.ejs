@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <title>UOTTACARPOOL</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="css/uottacarpool.css" rel="stylesheet"> 
+  </head>
+  <body>
+    <!--Text -->
+    <div align="center">
+        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL!!</h1>
+        <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+    </div>
+    <div class="btn_container" align="center">
+      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
+      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
+    </div>
+    <div id="login_form" style="visibility: hidden;" align="center">
+      <form id="signupFrom" action="/" method="post">
+      Email<br>
+      <input id="email" type="text" name="email">
+      <br>
+      Password<br>
+      <input id="password" type="text" name="password">
+      <br><br>
+      <button type="submit" id="login_button" onclick="login()" value="Login">Login</button>
+      <input type="hidden" name="test" id="testInput">
+    </form>
+    </div>
+
+<script>
+var selected = "";
+function driver() {
+    document.getElementById("driver").classList.add("selected");
+    document.getElementById("passenger").classList.remove("selected");
+    selected = "driver";
+    document.getElementById("login_form").style.visibility="visible";
+    
+    // alert(document.getElementById('testInput').name);
+    document.getElementById('testInput').name = 'driver';
+    // alert(document.getElementById('testInput').name);
+}
+
+function passenger() {
+    document.getElementById("passenger").classList.add("selected");
+    document.getElementById("driver").classList.remove("selected");
+    selected = "passenger";
+    document.getElementById("login_form").style.visibility="visible";
+    document.getElementById('testInput').name = 'passenger';
+}
+
+function login(){
+  var input_email = document.getElementById("email").value;
+  var input_password = document.getElementById("password").value;
+  var entity = {email: input_email,password: input_password};
+  // window.location.href = "./driver.html";
+  //document.getElementById("output").innerHTML = JSON.stringify(entity);
+  //Commit to DB and move to selected page
+  //Query DB from that page and resume 
+}
+</script>
+
+  </body>
+</html>
