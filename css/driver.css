@@ -2,6 +2,11 @@
   font-family: "Helvetica";
 }
 
+#view-matches {
+  margin-top: 30vh;
+  float: right;
+}
+
 .info-container {
   padding-top: 5vh;
   position:relative;

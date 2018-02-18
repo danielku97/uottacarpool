@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en-CA	">
+<html lang="en-CA ">
 <head>
     <meta charset="utf-8">
-    <title>Driver</title>
+    <title>Carpool</title>
     <meta name="description" content="Carpool site">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -137,6 +137,76 @@
 
         google.maps.event.addDomListener(window, 'load', function(){ initMap();});
 
+
+        var dummy_passengers =  [{
+          "email": "danielku",
+          "arrival_time": [903, 1604],
+          "start_coord": [
+              45.4,
+              -75.6
+          ],
+          "end_coord": [
+              44.47,
+              -79
+          ]
+          },
+          {
+              "email": "jennyzhang",
+              "arrival_time": [903, 1604],
+              "start_coord": [
+                  45.42,
+                  -75.55
+              ],
+              "end_coord": [
+                  45,
+                  -79
+              ]
+          }
+          ];
+
+          $(document).ready(function() {
+            for (i = 0; i < 2; i++){
+              console.log(dummy_passengers[i])
+              var stringified = JSON.stringify(dummy_passengers[i]);
+              console.log(stringified);
+              var newDiv = document.createElement("div");
+              newDiv.className = "match"
+              var newText = document.createTextNode(stringified);
+              newDiv.appendChild(newText);
+              var matchDiv = document.getElementById("matches");
+              matchDiv.appendChild(newDiv);
+            }
+
+          });
+
+            function pin_matches(){
+              var ottawa = {lat: 45.42, lng: -75.55};
+              var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: ottawa
+              });
+
+              console.log(dummy_passengers.start_coord);
+              var a_marker = new google.maps.Marker({
+                position: {lat: dummy_passengers[0].start_coord[0], lng: dummy_passengers[0].start_coord[1]},
+                map: map
+              });
+
+              a_marker.setVisible(true);
+
+              var b_marker = new google.maps.Marker({
+
+                position: {lat: dummy_passengers[1].start_coord[0], lng: dummy_passengers[1].start_coord[1]},
+                map: map
+              });
+
+              b_marker.setVisible(true);
+
+
+            }
+
+
+
       </script>
 
 
@@ -206,6 +276,7 @@
         <input name="am-pm" type='radio' value='pm'> PM
         <input id="search-button" type="submit" class="btn btn-primary" value="Search">
       </form>
+      <button id="view-matches" class="btn btn-primary" onclick="pin_matches()" >View Matches</button>
     </div>
 
     <div>
@@ -218,62 +289,6 @@
     </div>
   </div>
 
-  <script>
-
-    var dummy_passengers =     [{
-      "email": "danielku",
-      "arrival_time": [903, 1604],
-      "start_coord": [
-          45.4,
-          -75.6
-      ],
-      "end_coord": [
-          44.47,
-          -79
-      ]
-      },
-      {
-          "email": "jennyzhang",
-          "arrival_time": [903, 1604],
-          "start_coord": [
-              45.62,
-              -76
-          ],
-          "end_coord": [
-              45,
-              -79
-          ]
-      }
-      ];
-
-      $(document).ready(function() {
-        alert ("TEST");
-        console.log(dummy_passengers);
-
-        for (i = 0; i < 2; i++){
-          console.log(dummy_passengers[i])
-          var stringified = JSON.stringify(dummy_passengers[i]);
-          console.log(stringified);
-          var newDiv = document.createElement("div");
-          newDiv.className = "match"
-          var newText = document.createTextNode(stringified);
-          newDiv.appendChild(newText);
-          var matchDiv = document.getElementById("matches");
-          matchDiv.appendChild(newDiv);
-        }
-
-      });
-
-      function pin_matches(){
-
-        
-        var s_marker = new google.maps.Marker({
-          position: ottawa,
-          map: map
-        });
-
-      }
-  </script>
 
 </div>
 
