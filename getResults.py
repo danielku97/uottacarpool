@@ -11,7 +11,7 @@ _start = 0
 _end = 1
 _timeRange = 2
 _id = 3
-gmaps = googlemaps.Client(key='AIzaSyBp_rJUgCdnwC2bAgMLYFMG32GR_eriY58')
+gmaps = googlemaps.Client(key='AIzaSyDfCAyfNAAHGS9_yBYmToslD45fACdMah8')
 
 # Haversine distance - this is in km
 def haver_dist(origin, destination):
@@ -106,8 +106,9 @@ def getDriver(driversJson):
     (endlat, endlon) = driverJson["end_coord"][0], driverJson["end_coord"][1]
     driver.append((startlat, startlon))
     driver.append((endlat, endlon))
-    arrivalTime = driversJson["arrival_time"]
-    arrivalTime = str(arrivalTime[:2]) + ":" + str(arrivalTime[2:])
+    arrivalTime = passengerJson["arrival_time"]
+    arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
+    arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
     driver.append(arrivalTime)
     driver.append(driverJson["email"])
     return driver
@@ -121,7 +122,8 @@ def getPassengers(passengersJson):
         passenger.append((startlat, startlon))
         passenger.append((endlat, endlon))
         arrivalTime = passengerJson["arrival_time"]
-        arrivalTime = str(arrivalTime[:2]) + ":" + str(arrivalTime[2:])
+        arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
+        arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
         passenger.append(arrivalTime)
         passenger.append(passengerJson["email"])
         passengers.append(passenger)
