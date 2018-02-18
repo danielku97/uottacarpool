@@ -3,18 +3,27 @@
 }
 
 .info-container {
-  width:40%;
+  padding-top: 5vh;
+  position:relative;
+  width:30%;
   float: left;
   margin-left: 3%;
+  box-shadow: 7px 0 9px -7px rgba(0,0,0,0.4);
+  background-color: white;
+  height:100vh;
+  z-index: 100;
 }
 
 #map-container {
-  width:60%;
+  width:80%;
   float:right;
+  padding:0;
+
 }
 
 #search-button {
   float:right;
+  margin: 4vh 2vh 0 0;
 }
 
 #submit-div{
@@ -26,12 +35,17 @@
 }
 
 #map {
-  height: 80vh;
+  height: 100vh;
   width: 100%;
+  margin:0;
+  padding:0;
+  z-index: 1;
+  position:absolute;
 }
 
 #header {
   clear:both;
-  height:20vh;
   width:100%;
+  z-index:200;
+  background-color: yellow;
 }
