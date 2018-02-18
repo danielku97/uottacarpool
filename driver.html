@@ -1,43 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en-CA	">
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <title>UOTTACARPOOL</title>
+    <title>Carpool</title>
+    <meta name="description" content="Carpool site">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"> 
-    <link href="css/scrolling-nav.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/uottacarpool.css" rel="stylesheet"> 
-  </head>
-  <body>
-    <!--Text -->
-    <div align="center">
-        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">Dummy Driver Page</h1>
-        <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;"></h3>
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <div class="header col-12">
+    <h1>This is a carpool app.</h1>
+  </div>
+
+  <div class="main-container">
+    <div class="info-container col-4">
+      <br>
+      <div id="start-container">
+        <input id="start" type="text" class="form-control" placeholder="Starting location">
+      </div>
+      <br>
+      <div id="dest-container">
+        <input id="destination" type="text" class="form-control" placeholder="Destination">
+      </div>
+      <br>
+      <button id="search-button" type="button" class="btn btn-primary">Search</button>
     </div>
 
-<script>
-var selected = "";
-function driver() {
-    document.getElementById("driver").classList.add("selected");
-    document.getElementById("passenger").classList.remove("selected");
-    selected = "driver";
-}
+    <div id="map-container" class="col-8">
+      <br>
+      <div id="map"></div>
 
-function passenger() {
-    document.getElementById("passenger").classList.add("selected");
-    document.getElementById("driver").classList.remove("selected");
-    selected = "passenger";
-}
 
-function login(){
-  document.getElementById("login_button").innerHTML=selected;
-}
-</script>
+    </div>
+  </div>
 
-  </body>
+  <script>
+    function initMap() {
+
+      var ottawa = {lat: 45.421, lng: -79.697};
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: ottawa
+      });
+
+      var marker = new google.maps.Marker({
+        position: ottawa,
+        map: map
+      });
+
+      var start_input = document.getElementById('start');
+      var dest_input = document.getElementById('destination');
+
+      var s_autocomplete = new google.maps.places.Autocomplete(start_input);
+      var d_autocomplete = new google.maps.places.Autocomplete(dest_input);
+
+      s_autocomplete.bindTo('bounds', map);
+      d_autocomplete.bindTo('bounds', map);
+
+      s_autocomplete.addListener('place_changed', function() {
+        marker.setVisible(false);
+        var place = s_autocomplete.getPlace();
+        if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and
+          // pressed the Enter key, or the Place Details request failed.
+          window.alert("No details available for input: '" + place.name + "'");
+          return;
+        }
+
+      });
+
+      d_autocomplete.addListener('place_changed', function() {
+        marker.setVisible(false);
+        var place = d_autocomplete.getPlace();
+        if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and
+          // pressed the Enter key, or the Place Details request failed.
+          window.alert("No details available for input: '" + place.name + "'");
+          return;
+        }
+      });
+
+    }
+  </script>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcO528k_UPljEgbPzWGQlu90EUGgl6gs4&libraries=places&callback=initMap">
+    </script>
+
+
+
+</body>
 </html>
