@@ -106,9 +106,12 @@ def getDriver(driversJson):
     (endlat, endlon) = driverJson["end_coord"][0], driverJson["end_coord"][1]
     driver.append((startlat, startlon))
     driver.append((endlat, endlon))
-    arrivalTime = passengerJson["arrival_time"]
-    arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
-    arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
+    arrivalTime = driverJson["arrival_time"]
+    l = len(str(arrivalTime[0]))
+    ll = len(str(arrivalTime[1]))
+    arrivalTime[0] = str(arrivalTime[0])[:(l-2)] + ":" + str(arrivalTime[0])[(l-2):]
+    arrivalTime[1] = str(arrivalTime[1])[:(ll-2)] + ":" + str(arrivalTime[1])[(ll-2):]
+    print(arrivalTime)
     driver.append(arrivalTime)
     driver.append(driverJson["email"])
     return driver
@@ -122,9 +125,12 @@ def getPassengers(passengersJson):
         passenger.append((startlat, startlon))
         passenger.append((endlat, endlon))
         arrivalTime = passengerJson["arrival_time"]
-        arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
-        arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
+        l = len(str(arrivalTime[0]))
+        ll = len(str(arrivalTime[1]))
+        arrivalTime[0] = str(arrivalTime[0])[:(l-2)] + ":" + str(arrivalTime[0])[(l-2):]
+        arrivalTime[1] = str(arrivalTime[1])[:(ll-2)] + ":" + str(arrivalTime[1])[(ll-2):]
         passenger.append(arrivalTime)
+        print(arrivalTime)
         passenger.append(passengerJson["email"])
         passengers.append(passenger)
     return passengers
