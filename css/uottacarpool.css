@@ -31,14 +31,18 @@ body  {
 	margin: 0;
 	font-size: 30px;
 	color: #FFFFFF;
-	background-color: rgba(0, 0, 0, 0.75);
+	background-color: #1B2964;
 }
 
 .btn{
 	font-size: 60px;
 	margin: 20px;
-	background-color: red;
+	background-color: rgba(0, 0, 0, 0.25);
 	color:#000;
+}
+
+.btn:focus {
+  outline: none;
 }
 
 .btn_container{
@@ -46,7 +50,5 @@ body  {
 }
 
 .selected{
-	background-color: green;
-}
-
+	background-color: rgba(0, 0, 0, 0.5);
 }

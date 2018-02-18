@@ -150,6 +150,7 @@
         s_marker.setPosition(place.geometry.location);
         s_marker.setVisible(true);
 
+
       });
 
       var d_marker = new google.maps.Marker();
@@ -180,8 +181,6 @@
 
           document.getElementById('driverForm').appendChild(lat_node);
           document.getElementById('driverForm').appendChild(lng_node);
-
-        }
 
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
