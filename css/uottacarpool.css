@@ -35,32 +35,3 @@ body  {
 .selected{
 	background-color: green;
 }
-
-.info-container {
-  width:40%;
-  float: left;
-}
-
-#map-container {
-  width:60%;
-  float:right;
-}
-
-.search-button {
-
-}
-
-#start:focus {
-    border-color: #4d90fe;
-}
-
-#map {
-  height: 80vh;
-  width: 100%;
-}
-
-#header {
-  clear:both;
-  height:20vh;
-  width:100%;
-}
