@@ -27,6 +27,9 @@ app.get('/driver/:email', (req, res) => {
   res.render('driver.ejs', {mail: req.params.email});
 })
 
+app.get('/passenger/:email', (req, res) => {
+  res.render('passenger.ejs', {mail: req.params.email});
+})
 
 app.post('/', (req, res) => {
   var driver_email = req.body.email;
@@ -81,6 +84,19 @@ app.post('/', (req, res) => {
 	   }
 	  )
 	  res.redirect('/driver/' + req.body.mail);
+	});
+	
+	app.post("/passenger-submit", (req, res) => {
+	  db.collection('passenger').update(
+	   { email: req.body.mail },
+	   {
+	   	'$set' : {
+	      start: req.body.start,
+	      destination: req.body.destination
+	  	}
+	   }
+	  )
+	  res.redirect('/passenger/' + req.body.mail);
 	});
   
 })
