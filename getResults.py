@@ -119,8 +119,8 @@ if __name__ == '__main__':
     print(values, "\n\n\n")
 
     # The return type should be a json object
-    print(json.dumps([{'id': value[0][_id], 'cost': value[1]} for value in values], indent=4))
-
+    jsret = json.dumps([{'id': value[0][_id], 'cost': value[1]} for value in values], indent=4)
+    return jsret
 
 
 
