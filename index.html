@@ -20,26 +20,43 @@
         <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
     </div>
     <div class="btn_container" align="center">
-      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver_btn">Driver</button>
-      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger_btn">Passenger</button>
+      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
+      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
     </div>
-    <div class="login" align="center">
-      <form action="/action_page.php">
-        Email<br>
-        <input type="text" name="email">
-        <br>
-        Password<br>
-        <input type="text" name="password">
-        <br><br>
-        <input type="submit" value="Login">
-      </form> 
+    <div id="login_form" style="visibility: hidden;" align="center">
+      Email<br>
+      <input id="email" type="text" name="email">
+      <br>
+      Password<br>
+      <input id="password" type="text" name="password">
+      <br><br>
+      <button type="button" id="login_button" onclick="login()" value="Login">Login</button>
     </div>
-
 
 <script>
+var selected = "";
 function driver() {
-    document.getElementById("driver").removeClass("btn");
-    document.getElementById("driver").addClass("selected");
+    document.getElementById("driver").classList.add("selected");
+    document.getElementById("passenger").classList.remove("selected");
+    selected = "driver";
+    document.getElementById("login_form").style.visibility="visible";
+}
+
+function passenger() {
+    document.getElementById("passenger").classList.add("selected");
+    document.getElementById("driver").classList.remove("selected");
+    selected = "passenger";
+    document.getElementById("login_form").style.visibility="visible";
+}
+
+function login(){
+  var input_email = document.getElementById("email").value;
+  var input_password = document.getElementById("password").value;
+  var entity = {email: input_email,password: input_password};
+  window.location.href = "./driver.html";
+  //document.getElementById("output").innerHTML = JSON.stringify(entity);
+  //Commit to DB and move to selected page
+  //Query DB from that page and resume 
 }
 </script>
 

@@ -24,6 +24,7 @@ body  {
 .btn{
 	font-size: 60px;
 	margin: 20px;
+	background-color: red;
 	color:#000;	
 }
 
@@ -32,9 +33,7 @@ body  {
 }
 
 .selected{
-	font-size: 60px;
-	margin: 20px;
-	color:#472;	
+	background-color: green;
 }
 
 }
