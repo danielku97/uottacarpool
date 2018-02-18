@@ -107,15 +107,21 @@ if __name__ == '__main__':
         if (sys.argv[1]).is_integer():
             count = sys.argv[1]
 
-    testDriver = [(45.4214297,-75.6837206), (44.4748057,-79.9425542), ["11:03", "12:04"], 1]
+    testDriver = [(45.4214297,-75.6837206), (44.4748057,-79.9425542), ["11:03", "12:04"], "frcheng"]
     testPassengers = []
-    testPassenger1 = [(45.42,-75.683), (44.474,-80.542), ["13:03", "16:04"], 2]
-    testPassenger2 = [(45.4,-75.6), (44.47,-79), ["9:03", "16:04"], 3]
-    testPassenger3 = [(45.62,-76), (45,-79), ["9:03", "16:04"], 4]
+    testPassenger1 = [(45.42,-75.683), (44.474,-80.542), ["13:03", "16:04"], "lucylu"]
+    testPassenger2 = [(45.4,-75.6), (44.47,-79), ["9:03", "16:04"], "danielku"]
+    testPassenger3 = [(45.62,-76), (45,-79), ["9:03", "16:04"], "jennyzhang"]
     testPassengers.append(testPassenger1)
     testPassengers.append(testPassenger2)
     testPassengers.append(testPassenger3)
-    print(find_passengers(testDriver, testPassengers, count))
+    values = find_passengers(testDriver, testPassengers, count)
+    print(values, "\n\n\n")
+
+    # The return type should be a json object
+    print(json.dumps([{'id': value[0][_id], 'cost': value[1]} for value in values], indent=4))
+
+
 
 
 
