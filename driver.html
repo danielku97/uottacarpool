@@ -13,6 +13,133 @@
 
     <link rel="stylesheet" href="css/driver.css">
 
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcO528k_UPljEgbPzWGQlu90EUGgl6gs4&libraries=places">
+      </script>
+
+      <script>
+
+        function initMap() {
+          console.log("RUNNING");
+
+          var ottawa = {lat: 45.421, lng: -79.697};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: ottawa
+          });
+
+          var s_marker = new google.maps.Marker({
+            position: ottawa,
+            map: map
+          });
+
+          var start_input = document.getElementById('start');
+          var dest_input = document.getElementById('destination');
+
+          var s_autocomplete = new google.maps.places.Autocomplete(start_input);
+          var d_autocomplete = new google.maps.places.Autocomplete(dest_input);
+
+          s_autocomplete.bindTo('bounds', map);
+          d_autocomplete.bindTo('bounds', map);
+          s_autocomplete.addListener('place_changed', function() {
+            s_marker.setVisible(false);
+            var place = s_autocomplete.getPlace();
+            if (!place.geometry) {
+              // User entered the name of a Place that was not suggested and
+              // pressed the Enter key, or the Place Details request failed.
+              window.alert("No details available for input: '" + place.name + "'");
+              return;
+            }
+            else {
+              var lat = place.geometry.location.lat();
+              var lng = place.geometry.location.lng();
+              var form = $("driverForm");
+              var lat_node = document.createElement('input');
+              lat_node.setAttribute('id', 'lat');
+              lat_node.setAttribute('value', lat);
+              lat_node.setAttribute('class', 'form-control');
+              lat_node.setAttribute('type', 'hidden');
+
+              var lng_node = document.createElement('input');
+              lng_node.setAttribute('id', 'lng');
+              lng_node.setAttribute('value', lng);
+              lng_node.setAttribute('class', 'form-control');
+              lng_node.setAttribute('type', 'hidden');
+
+              document.getElementById('driverForm').appendChild(lat_node);
+              document.getElementById('driverForm').appendChild(lng_node);
+
+            }
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+              map.setCenter(place.geometry.location);
+              map.setZoom(16);
+            }
+
+            s_marker.setPosition(place.geometry.location);
+            s_marker.setVisible(true);
+
+
+          });
+
+          var d_marker = new google.maps.Marker();
+          d_autocomplete.addListener('place_changed', function() {
+            d_marker.setVisible(false);
+            var place = d_autocomplete.getPlace();
+            if (!place.geometry) {
+              // User entered the name of a Place that was not suggested and
+              // pressed the Enter key, or the Place Details request failed.
+              window.alert("No details available for input: '" + place.name + "'");
+              return;
+            }
+            else {
+              var lat = place.geometry.location.lat();
+              var lng = place.geometry.location.lng();
+              var form = $("driverForm");
+              var lat_node = document.createElement('input');
+              lat_node.setAttribute('id', 'lat');
+              lat_node.setAttribute('value', lat);
+              lat_node.setAttribute('class', 'form-control');
+              lat_node.setAttribute('type', 'hidden');
+
+              var lng_node = document.createElement('input');
+              lng_node.setAttribute('id', 'lng');
+              lng_node.setAttribute('value', lng);
+              lng_node.setAttribute('class', 'form-control');
+              lng_node.setAttribute('type', 'hidden');
+
+              document.getElementById('driverForm').appendChild(lat_node);
+              document.getElementById('driverForm').appendChild(lng_node);
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+              map.setCenter(place.geometry.location);
+              map.setZoom(16);
+            }
+
+            d_marker = new google.maps.Marker({
+              position: place.geometry.location,
+              map: map
+            });
+            d_marker.setVisible(true);
+          }
+          });
+          console.log("end");
+        }
+
+        google.maps.event.addDomListener(window, 'load', function(){ initMap();});
+
+      </script>
+
+
 </head>
 
 <body>
@@ -25,9 +152,11 @@
     <div class="info-container col-4">
       <br><br>
       <form id="driverForm" action="/" method="post">
-        <input id="start" type="text" class="form-control" placeholder="Starting location">
+        <input id="start" type="text" class="form-control" placeholder="Starting location"
+        autocomplete='off'>
         <br>
-        <input id="destination" type="text" class="form-control" placeholder="Destination">
+        <input id="destination" type="text" class="form-control" placeholder="Destination"
+        autocomplete='off'>
         <br>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <select name="Arrival Time" id="dropdown-menu" onload='fillTimes()'>
@@ -79,138 +208,76 @@
       </form>
     </div>
 
-    <div id="map-container" class="col-8">
-      <br>
+    <div>
+      <div id="matches">
+        <p>MATCHES</p>
+      </div>
+      <div id="map-container" class="col-8">
+        <br>
       <div id="map"></div>
-
     </div>
   </div>
 
   <script>
-    function initMap() {
 
-      var ottawa = {lat: 45.421, lng: -79.697};
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: ottawa
-      });
+    var dummy_passengers =     [{
+      "email": "danielku",
+      "arrival_time": [903, 1604],
+      "start_coord": [
+          45.4,
+          -75.6
+      ],
+      "end_coord": [
+          44.47,
+          -79
+      ]
+      },
+      {
+          "email": "jennyzhang",
+          "arrival_time": [903, 1604],
+          "start_coord": [
+              45.62,
+              -76
+          ],
+          "end_coord": [
+              45,
+              -79
+          ]
+      }
+      ];
 
-      var s_marker = new google.maps.Marker({
-        position: ottawa,
-        map: map
-      });
+      $(document).ready(function() {
+        alert ("TEST");
+        console.log(dummy_passengers);
 
-      var start_input = document.getElementById('start');
-      var dest_input = document.getElementById('destination');
-
-      var s_autocomplete = new google.maps.places.Autocomplete(start_input);
-      var d_autocomplete = new google.maps.places.Autocomplete(dest_input);
-
-      s_autocomplete.bindTo('bounds', map);
-      d_autocomplete.bindTo('bounds', map);
-
-      s_autocomplete.addListener('place_changed', function() {
-        s_marker.setVisible(false);
-        var place = s_autocomplete.getPlace();
-        if (!place.geometry) {
-          // User entered the name of a Place that was not suggested and
-          // pressed the Enter key, or the Place Details request failed.
-          window.alert("No details available for input: '" + place.name + "'");
-          return;
+        for (i = 0; i < 2; i++){
+          console.log(dummy_passengers[i])
+          var stringified = JSON.stringify(dummy_passengers[i]);
+          console.log(stringified);
+          var newDiv = document.createElement("div");
+          newDiv.className = "match"
+          var newText = document.createTextNode(stringified);
+          newDiv.appendChild(newText);
+          var matchDiv = document.getElementById("matches");
+          matchDiv.appendChild(newDiv);
         }
-        else {
-          var lat = place.geometry.location.lat();
-          var lng = place.geometry.location.lng();
-          var form = $("driverForm");
-          var lat_node = document.createElement('input');
-          lat_node.setAttribute('id', 'lat');
-          lat_node.setAttribute('value', lat);
-          lat_node.setAttribute('class', 'form-control');
-          lat_node.setAttribute('type', 'hidden');
-
-          var lng_node = document.createElement('input');
-          lng_node.setAttribute('id', 'lng');
-          lng_node.setAttribute('value', lng);
-          lng_node.setAttribute('class', 'form-control');
-          lng_node.setAttribute('type', 'hidden');
-
-          document.getElementById('driverForm').appendChild(lat_node);
-          document.getElementById('driverForm').appendChild(lng_node);
-
-        }
-
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        }
-        else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(16);
-        }
-
-        s_marker.setPosition(place.geometry.location);
-        s_marker.setVisible(true);
-
 
       });
 
-      var d_marker = new google.maps.Marker();
-      d_autocomplete.addListener('place_changed', function() {
-        d_marker.setVisible(false);
-        var place = d_autocomplete.getPlace();
-        if (!place.geometry) {
-          // User entered the name of a Place that was not suggested and
-          // pressed the Enter key, or the Place Details request failed.
-          window.alert("No details available for input: '" + place.name + "'");
-          return;
-        }
-        else {
-          var lat = place.geometry.location.lat();
-          var lng = place.geometry.location.lng();
-          var form = $("driverForm");
-          var lat_node = document.createElement('input');
-          lat_node.setAttribute('id', 'lat');
-          lat_node.setAttribute('value', lat);
-          lat_node.setAttribute('class', 'form-control');
-          lat_node.setAttribute('type', 'hidden');
+      function pin_matches(){
 
-          var lng_node = document.createElement('input');
-          lng_node.setAttribute('id', 'lng');
-          lng_node.setAttribute('value', lng);
-          lng_node.setAttribute('class', 'form-control');
-          lng_node.setAttribute('type', 'hidden');
-
-          document.getElementById('driverForm').appendChild(lat_node);
-          document.getElementById('driverForm').appendChild(lng_node);
-
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        }
-        else {
-          map.setCenter(place.geometry.location);
-          map.setZoom(16);
-        }
-
-        d_marker = new google.maps.Marker({
-          position: place.geometry.location,
+        
+        var s_marker = new google.maps.Marker({
+          position: ottawa,
           map: map
         });
-        d_marker.setVisible(true);
 
-      });
-
-    }
+      }
   </script>
 
-
-
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcO528k_UPljEgbPzWGQlu90EUGgl6gs4&libraries=places&callback=initMap">
-    </script>
-
-
 </div>
+
+
+
 </body>
 </html>
