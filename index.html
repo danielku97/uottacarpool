@@ -29,21 +29,24 @@
     </div>
 
     <div id="login-slider" >
-      <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+      <h3 class="small-title" align="center" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+      <div class="backdrop">
       <div class="btn_container" align="center">
         <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
         <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
       </div>
-      Email<br>
-      <input id="email" type="text" name="email">
-      <br>
-      Password<br>
-      <input id="password" type="text" name="password">
-      <br><br>
-      <button type="button" id="login_button" onclick="login()" value="Login">Login</button>
+      <div id="login_form" align="center" style="visibility: hidden;">
+      	  <p style="color: #000">Email</p>
+	      <input id="email" type="text" name="email">
+	      <br>
+	      <p style="color: #000">Password</p>
+	      <input id="password" type="text" name="password">
+	      <br><br>
+	      <button type="button" id="login_button" onclick="login()" value="Login">Login</button>
+ 	 </div>
+ 	</div>
     </div>
-    <p id="output">Output text!!</p>
-
+    
 <script>
 var selected = "";
 function driver() {
