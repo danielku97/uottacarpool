@@ -8,22 +8,27 @@
     <title>UOTTACARPOOL</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/scrolling-nav.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/uottacarpool.css" rel="stylesheet"> 
+    <link href="css/uottacarpool.css" rel="stylesheet">
   </head>
-  <body>
+  <body class='background'>
     <!--Text -->
     <div align="center">
-        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL!!</h1>
-        <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL</h1>
     </div>
-    <div class="btn_container" align="center">
-      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
-      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
+
+    <div id="info-block">
+      <p>Find someone to carpool with,
     </div>
-    <div id="login_form" style="visibility: hidden;" align="center">
+
+    <div id="login-slider" >
+      <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+      <div class="btn_container" align="center">
+        <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
+        <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
+      </div>
       Email<br>
       <input id="email" type="text" name="email">
       <br>
@@ -56,7 +61,7 @@ function login(){
   window.location.href = "./driver.html";
   //document.getElementById("output").innerHTML = JSON.stringify(entity);
   //Commit to DB and move to selected page
-  //Query DB from that page and resume 
+  //Query DB from that page and resume
 }
 </script>
 
