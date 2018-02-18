@@ -75,6 +75,26 @@
           window.alert("No details available for input: '" + place.name + "'");
           return;
         }
+        else {
+          var lat = place.geometry.location.lat();
+          var lng = place.geometry.location.lng();
+          var form = $("driverForm");
+          var lat_node = document.createElement('input');
+          lat_node.setAttribute('id', 'lat');
+          lat_node.setAttribute('value', lat);
+          lat_node.setAttribute('class', 'form-control');
+          lat_node.setAttribute('type', 'hidden');
+
+          var lng_node = document.createElement('input');
+          lng_node.setAttribute('id', 'lng');
+          lng_node.setAttribute('value', lng);
+          lng_node.setAttribute('class', 'form-control');
+          lng_node.setAttribute('type', 'hidden');
+
+          document.getElementById('driverForm').appendChild(lat_node);
+          document.getElementById('driverForm').appendChild(lng_node);
+
+        }
 
       });
 
@@ -86,6 +106,26 @@
           // pressed the Enter key, or the Place Details request failed.
           window.alert("No details available for input: '" + place.name + "'");
           return;
+        }
+        else {
+          var lat = place.geometry.location.lat();
+          var lng = place.geometry.location.lng();
+          var form = $("driverForm");
+          var lat_node = document.createElement('input');
+          lat_node.setAttribute('id', 'lat');
+          lat_node.setAttribute('value', lat);
+          lat_node.setAttribute('class', 'form-control');
+          lat_node.setAttribute('type', 'hidden');
+
+          var lng_node = document.createElement('input');
+          lng_node.setAttribute('id', 'lng');
+          lng_node.setAttribute('value', lng);
+          lng_node.setAttribute('class', 'form-control');
+          lng_node.setAttribute('type', 'hidden');
+
+          document.getElementById('driverForm').appendChild(lat_node);
+          document.getElementById('driverForm').appendChild(lng_node);
+
         }
       });
 

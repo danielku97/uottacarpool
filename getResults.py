@@ -4,6 +4,7 @@ import time
 import googlemaps
 import json
 import heapq
+from flask import Flask, render_template, request, redirect, Response
 
 APPROX_FACTOR = 2
 SPEED_LIMIT = 100
@@ -12,6 +13,9 @@ _end = 1
 _timeRange = 2
 _id = 3
 gmaps = googlemaps.Client(key='AIzaSyDfCAyfNAAHGS9_yBYmToslD45fACdMah8')
+
+app = Flask(__name__)
+
 
 # Haversine distance - this is in km
 def haver_dist(origin, destination):
@@ -106,9 +110,12 @@ def getDriver(driversJson):
     (endlat, endlon) = driverJson["end_coord"][0], driverJson["end_coord"][1]
     driver.append((startlat, startlon))
     driver.append((endlat, endlon))
-    arrivalTime = passengerJson["arrival_time"]
-    arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
-    arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
+    arrivalTime = driverJson["arrival_time"]
+    l = len(str(arrivalTime[0]))
+    ll = len(str(arrivalTime[1]))
+    arrivalTime[0] = str(arrivalTime[0])[:(l-2)] + ":" + str(arrivalTime[0])[(l-2):]
+    arrivalTime[1] = str(arrivalTime[1])[:(ll-2)] + ":" + str(arrivalTime[1])[(ll-2):]
+    print(arrivalTime)
     driver.append(arrivalTime)
     driver.append(driverJson["email"])
     return driver
@@ -122,18 +129,37 @@ def getPassengers(passengersJson):
         passenger.append((startlat, startlon))
         passenger.append((endlat, endlon))
         arrivalTime = passengerJson["arrival_time"]
-        arrivalTime[0] = str(arrivalTime[0][:2]) + ":" + str(arrivalTime[0][2:])
-        arrivalTime[1] = str(arrivalTime[1][:2]) + ":" + str(arrivalTime[1][2:])
+        l = len(str(arrivalTime[0]))
+        ll = len(str(arrivalTime[1]))
+        arrivalTime[0] = str(arrivalTime[0])[:(l-2)] + ":" + str(arrivalTime[0])[(l-2):]
+        arrivalTime[1] = str(arrivalTime[1])[:(ll-2)] + ":" + str(arrivalTime[1])[(ll-2):]
         passenger.append(arrivalTime)
+        print(arrivalTime)
         passenger.append(passengerJson["email"])
         passengers.append(passenger)
     return passengers
 
-if __name__ == '__main__':
+@app.route('/receiver', methods = ['POST'])
+def receiver():
+    driverJson = request.form["form1???"]
+    passengersJson = request.form["form2???"]
+
+    driver = getDriver(driverJson)
+    passengers = getPassengers(passengersJson)
     count = 10
-    # if len(sys.argv) == 2:
-    #     if (sys.argv[1]).is_integer():
-    #         count = sys.argv[1]
+
+    values = find_passengers(driver, passengers, count)
+    # The result type should be a json object
+    jsret = json.dumps([{'id': value[0][_id], 'cost': value[1], 'startcoord': value[0][_start], 'endcoord': value[0][_end]} for value in values], indent=4)
+    print(jsret)
+    return jsret
+
+
+
+
+if __name__ == '__main__':
+    #count = 10
+
     #testDriver = [(45.4214297,-75.6837206), (44.4748057,-79.9425542), ["11:03", "12:04"], "frcheng"]
     #testPassengers = []
     #testPassenger1 = [(45.42,-75.683), (44.474,-80.542), ["13:03", "16:04"], "lucylu"]
@@ -146,16 +172,17 @@ if __name__ == '__main__':
     #print(values, "\n\n\n")
     
     # sys.argv[1] is driver json, sys.argv[2] is passengers list json
-    driverJson = json.loads(sys.argv[1])
-    passengersJson = json.loads(sys.argv[2])
-    driver = getDriver(driverJson)
-    passengers = getPassengers(passengersJson)
+    #driverJson = json.loads(sys.argv[1])
+    #passengersJson = json.loads(sys.argv[2])
+    #driver = getDriver(driverJson)
+    #passengers = getPassengers(passengersJson)
 
-    values = find_passengers(driver, passengers, count)
+
+    #values = find_passengers(driver, passengers, count)
     # The result type should be a json object
-    jsret = json.dumps([{'id': value[0][_id], 'cost': value[1], 'startcoord': value[0][_start], 'endcoord': value[0][_end]} for value in values], indent=4)
-    print(jsret)
-
+    #jsret = json.dumps([{'id': value[0][_id], 'cost': value[1], 'startcoord': value[0][_start], 'endcoord': value[0][_end]} for value in values], indent=4)
+    #print(jsret)
+    app.run()
 
 
 
