@@ -100,29 +100,55 @@ def find_passengers(driver, passengers, count):
     return [list2[i] for i in range(min(count, len(list2)))]
 
 
+def getDriver(driversJson):
+    driver = []
+    (startlat, startlon) = driverJson["start_coord"][0], driverJson["start_coord"][1]
+    (endlat, endlon) = driverJson["end_coord"][0], driverJson["end_coord"][1]
+    driver.append((startlat, startlon))
+    driver.append((endlat, endlon))
+    driver.append(driversJson["arrival_time"])
+    driver.append(driverJson["email"])
+    return driver
+
+def getPassengers(passengersJson):
+    passengers = []
+    for passengerJson in passengersJson:
+        passenger = []
+        (startlat, startlon) = passengerJson["start_coord"][0], passengerJson["start_coord"][1]
+        (endlat, endlon) = passengerJson["end_coord"][0], passengerJson["end_coord"][1]
+        passenger.append((startlat, startlon))
+        passenger.append((endlat, endlon))
+        passenger.append(passengerJson["arrival_time"])
+        passenger.append(passengerJson["email"])
+        passengers.append(passenger)
+    return passengers
 
 if __name__ == '__main__':
     count = 10
-    if len(sys.argv) == 2:
-        if (sys.argv[1]).is_integer():
-            count = sys.argv[1]
+    # if len(sys.argv) == 2:
+    #     if (sys.argv[1]).is_integer():
+    #         count = sys.argv[1]
+    #testDriver = [(45.4214297,-75.6837206), (44.4748057,-79.9425542), ["11:03", "12:04"], "frcheng"]
+    #testPassengers = []
+    #testPassenger1 = [(45.42,-75.683), (44.474,-80.542), ["13:03", "16:04"], "lucylu"]
+    #testPassenger2 = [(45.4,-75.6), (44.47,-79), ["9:03", "16:04"], "danielku"]
+    #testPassenger3 = [(45.62,-76), (45,-79), ["9:03", "16:04"], "jennyzhang"]
+    #testPassengers.append(testPassenger1)
+    #testPassengers.append(testPassenger2)
+    #testPassengers.append(testPassenger3)
+    #values = find_passengers(testDriver, testPassengers, count)
+    #print(values, "\n\n\n")
+    
+    # sys.argv[1] is driver json, sys.argv[2] is passengers list json
+    driverJson = json.loads(sys.argv[1])
+    passengersJson = json.loads(sys.argv[2])
+    driver = getDriver(driverJson)
+    passengers = getPassengers(passengersJson)
 
-    testDriver = [(45.4214297,-75.6837206), (44.4748057,-79.9425542), ["11:03", "12:04"], "frcheng"]
-    testPassengers = []
-    testPassenger1 = [(45.42,-75.683), (44.474,-80.542), ["13:03", "16:04"], "lucylu"]
-    testPassenger2 = [(45.4,-75.6), (44.47,-79), ["9:03", "16:04"], "danielku"]
-    testPassenger3 = [(45.62,-76), (45,-79), ["9:03", "16:04"], "jennyzhang"]
-    testPassengers.append(testPassenger1)
-    testPassengers.append(testPassenger2)
-    testPassengers.append(testPassenger3)
-    values = find_passengers(testDriver, testPassengers, count)
-    print(values, "\n\n\n")
-
-    # The return type should be a json object
-    jsret = json.dumps([{'id': value[0][_id], 'cost': value[1]} for value in values], indent=4)
-    return jsret
-
-
+    values = find_passengers(driver, passengers, count)
+    # The result type should be a json object
+    jsret = json.dumps([{'id': value[0][_id], 'cost': value[1], 'startcoord': value[0][_start], 'endcoord': value[0][_end]} for value in values], indent=4)
+    print(jsret)
 
 
 
