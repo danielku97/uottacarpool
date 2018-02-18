@@ -8,6 +8,7 @@
     <title>UOTTACARPOOL</title>
 
     <!-- Bootstrap -->
+
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/uottacarpool.css" rel="stylesheet"> 
@@ -17,17 +18,22 @@
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/scrolling-nav.js"></script>
   </head>
-  <body>
+  <body class='background'>
     <!--Text -->
     <div align="center">
-        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL!!</h1>
-        <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+        <h1 class="big-title" style="font-family: 'Oswald', sans-serif;">UOTTACARPOOL</h1>
     </div>
-    <div class="btn_container" align="center">
-      <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
-      <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
+
+    <div id="info-block">
+      <p>Find someone to carpool with,
     </div>
-    <div id="login_form" style="visibility: hidden;" align="center">
+
+    <div id="login-slider" >
+      <h3 class="small-title" style="font-weight:bold; font-family: 'Lato', sans-serif;">I am a...</h3>
+      <div class="btn_container" align="center">
+        <button id="driver" class="btn" type="button" aria-hidden="true" href="driver.html" target="blank" onclick="driver()">Driver</button>
+        <button id="passenger" class="btn" type="button" aria-hidden="true" href="passenger.html" target="blank" onclick="passenger()">Passenger</button>
+      </div>
       Email<br>
       <input id="email" type="text" name="email">
       <br>
@@ -62,6 +68,7 @@ function login(){
 
   //document.getElementById("output").innerHTML = JSON.stringify(entity);
   //Commit to DB and move to selected page
+
   //Query DB from that page and resume 
   var driver = {
         "email": "frcheng",
@@ -116,20 +123,20 @@ function login(){
    	//Ok, error is logged to console and the error is that url has to be http
    	//Preliminary research shows that we need python and flask?? 
    	//Then we can call the function and everything else should be good
-      $.ajax({
-        type: "POST",
-        url : "/receiver",
-        data: {param: driver, param2: passenger_list},
-        dataType : "json",
-        success : function(response){
-            console.log(response);
-            document.getElementById("output").innerHTML = response
-            },
-        error : function(response){
-            alert("Error running python script :(")
-            console.log(response);
-        }
-    });
+//       $.ajax({
+//         type: "POST",
+//         url : "/receiver",
+//         data: {param: driver, param2: passenger_list},
+//         dataType : "json",
+//         success : function(response){
+//             console.log(response);
+//             document.getElementById("output").innerHTML = response
+//             },
+//         error : function(response){
+//             alert("Error running python script :(")
+//             console.log(response);
+//         }
+//     });
 }
 </script>
 
