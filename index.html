@@ -9,9 +9,13 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
-    <link href="css/scrolling-nav.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/uottacarpool.css" rel="stylesheet"> 
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrolling-nav.js"></script>
   </head>
   <body>
     <!--Text -->
@@ -32,6 +36,7 @@
       <br><br>
       <button type="button" id="login_button" onclick="login()" value="Login">Login</button>
     </div>
+    <p id="output">Output text!!</p>
 
 <script>
 var selected = "";
@@ -50,13 +55,81 @@ function passenger() {
 }
 
 function login(){
-  var input_email = document.getElementById("email").value;
-  var input_password = document.getElementById("password").value;
-  var entity = {email: input_email,password: input_password};
-  window.location.href = "./driver.html";
+  // var input_email = document.getElementById("email").value;
+  // var input_password = document.getElementById("password").value;
+  // var entity = {email: input_email,password: input_password};
+  // window.location.href = "./driver.html";
+
   //document.getElementById("output").innerHTML = JSON.stringify(entity);
   //Commit to DB and move to selected page
   //Query DB from that page and resume 
+  var driver = {
+        "email": "frcheng",
+        "arrival_time": [1103, 1204],
+        "start_coord": [
+            45.4214297,
+            -75.6837206
+        ],
+        "end_coord": [
+            44.4748057,
+            -79.9425542
+        ]
+    };
+
+    var passenger_list = [{
+        "email": "lucylu",
+        "arrival_time": [1303, 1604],
+        "start_coord": [
+            45.42,
+            -75.683
+        ],
+        "end_coord": [
+            44.474,
+            -80.542
+        ]
+    }, 
+    {
+        "email": "danielku",
+        "arrival_time": [903, 1604],
+        "start_coord": [
+            45.4,
+            -75.6
+        ],
+        "end_coord": [
+            44.47,
+            -79
+        ]
+    }, 
+    {
+        "email": "jennyzhang",
+        "arrival_time": [903, 1604],
+        "start_coord": [
+            45.62,
+            -76
+        ],
+        "end_coord": [
+            45,
+            -79
+        ]
+    }]
+
+   	//Ok, error is logged to console and the error is that url has to be http
+   	//Preliminary research shows that we need python and flask?? 
+   	//Then we can call the function and everything else should be good
+      $.ajax({
+        type: "POST",
+        url : "/receiver",
+        data: {param: driver, param2: passenger_list},
+        dataType : "json",
+        success : function(response){
+            console.log(response);
+            document.getElementById("output").innerHTML = response
+            },
+        error : function(response){
+            alert("Error running python script :(")
+            console.log(response);
+        }
+    });
 }
 </script>
 
